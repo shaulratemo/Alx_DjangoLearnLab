@@ -151,6 +151,8 @@ MIDDLEWARE += [
     "csp.middleware.CSPMiddleware",  # django-csp package needed
 ]
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Content Security Policy (basic version)
 CSP_DEFAULT_SRC = ("'self'",)
 CSP_SCRIPT_SRC = ("'self'", "https://cdn.jsdelivr.net")  # Example CDN allowed
