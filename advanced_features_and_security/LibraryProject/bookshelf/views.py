@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import permission_required, login_required
 from .models import Book
 from django import forms
-from .forms import SearchForm
+from .forms import SearchForm, ExampleForm
 
 # Book form
 class BookForm(forms.ModelForm):
@@ -65,3 +65,12 @@ def book_search(request):
         # Safe ORM query prevents SQL injection
         books = Book.objects.filter(title__icontains=query)
     return render(request, 'bookshelf/book_search.html', {'form': form, 'books': books})
+
+def example_form_view(request):
+    if request.method == "POST":
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            return render(request, "bookshelf/form_example.html", {"form": form, "success": True})
+    else:
+        form = ExampleForm()
+    return render(request, "bookshelf/form_example.html", {"form": form})
