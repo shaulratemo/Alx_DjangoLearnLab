@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import permission_required, login_required
 from .models import Book
 from django import forms
+from .forms import SearchForm
 
-# Create your views here.
 # Book form
 class BookForm(forms.ModelForm):
     class Meta:
@@ -53,3 +53,15 @@ def book_delete(request, pk):
         book.delete()
         return redirect('book_list')
     return render(request, 'bookshelf/book_confirm_delete.html', {'book': book})
+
+
+# Secure search view
+@login_required
+def book_search(request):
+    form = SearchForm(request.GET or None)
+    books = []
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        # Safe ORM query prevents SQL injection
+        books = Book.objects.filter(title__icontains=query)
+    return render(request, 'bookshelf/book_search.html', {'form': form, 'books': books})
