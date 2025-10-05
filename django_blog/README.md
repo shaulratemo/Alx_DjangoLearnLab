@@ -21,3 +21,22 @@ This section adds full CRUD functionality for blog posts. Authenticated users ca
 - `/posts/<id>/` — view post details
 - `/posts/<id>/edit/` — edit post
 - `/posts/<id>/delete/` — delete post
+
+# Comment System
+
+## Overview
+Adds a comment feature allowing users to discuss posts.
+
+## Features
+- Authenticated users can add comments.
+- Only comment authors can edit or delete their comments.
+- Comments are displayed under each blog post.
+
+## URLs
+- `/posts/<post_id>/comments/new/` — add a new comment
+- `/comments/<comment_id>/edit/` — edit an existing comment
+- `/comments/<comment_id>/delete/` — delete a comment
+
+## Permissions
+- Authenticated users can comment.
+- Only comment authors can edit or delete their own comments.
