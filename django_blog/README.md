@@ -40,3 +40,23 @@ Adds a comment feature allowing users to discuss posts.
 ## Permissions
 - Authenticated users can comment.
 - Only comment authors can edit or delete their own comments.
+
+
+# Tagging and Search Functionality
+
+## Overview
+This feature allows users to organize and find posts easily using tags and keyword search.
+
+## Features
+- **Tagging:** Users can add multiple tags to posts.
+- **Tag Filter:** Click any tag to view all posts under it.
+- **Search:** Search for posts by title, content, or tags.
+
+## URLs
+- `/tags/<tag_name>/` — View all posts with a specific tag.
+- `/search/?q=keyword` — Search posts by keyword.
+
+## Example
+1. Add tags when creating or editing a post (e.g., “django, backend, API”).
+2. Use the search bar to find posts by keyword.
+3. Click a tag to explore all posts under that tag.
