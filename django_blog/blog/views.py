@@ -8,6 +8,23 @@ from django.urls import reverse_lazy, reverse
 from django.db.models import Q
 from .models import Post, Comment
 from .forms import RegisterForm, CommentForm
+from taggit.models import Tag
+
+class PostByTagListView(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'  # reuse your list template
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        tag_slug = self.kwargs.get('tag_slug')
+        self.tag = Tag.objects.get(slug=tag_slug)
+        return Post.objects.filter(tags__in=[self.tag])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag'] = self.tag
+        return context
+
 
 # Custom Registration View
 def register(request):
