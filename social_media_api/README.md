@@ -89,6 +89,18 @@ Response:
   "followers": []
 }
 
+## Posts & Comments API
+
+POST /api/posts/ – create post
+
+GET /api/posts/ – list posts (supports search & ordering)
+
+GET /api/posts/{id}/ – view post with nested comments
+
+POST /api/comments/ – add a comment to a post
+
+Permissions: only authors may edit/delete their own content
+
 ### Custom User Model
 
 The custom user model extends Django’s AbstractUser and includes:

@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 
@@ -31,7 +31,38 @@ class RegisterSerializer(serializers.ModelSerializer):
         # Create a token for the user
         Token.objects.create(user=user)
         return user
+    
 
+class LoginSerializer(serializers.Serializer):
+    """
+    Serializer for user login.
+    Expects 'username' and 'password' fields in input.
+    On validation it authenticates the user and ensures an auth token exists.
+    The serializer returns the authenticated user as validated_data (so views can
+    create the response containing Token and user info).
+    """
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True)
+
+    def validate(self, attrs):
+        username = attrs.get('username')
+        password = attrs.get('password')
+
+        if username and password:
+            user = authenticate(username=username, password=password)
+            if not user:
+                raise serializers.ValidationError("Unable to log in with provided credentials.")
+            if not user.is_active:
+                raise serializers.ValidationError("User account is disabled.")
+        else:
+            raise serializers.ValidationError("Must include 'username' and 'password'.")
+
+        # Ensure a token exists for the user (create if missing)
+        Token.objects.get_or_create(user=user)
+
+        # Return the user so the view can access it via serializer.validated_data
+        return user
+    
 
 class UserSerializer(serializers.ModelSerializer):
     """
