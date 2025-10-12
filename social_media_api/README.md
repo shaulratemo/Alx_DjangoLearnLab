@@ -154,3 +154,16 @@ social_media_api/
 │   ├── wsgi.py
 │   ├── asgi.py
 ├── manage.py
+
+## Follows & Feed
+
+### Follow / Unfollow
+- POST /api/accounts/follow/<user_id>/ — follow the target user (authenticated)
+- POST /api/accounts/unfollow/<user_id>/ — unfollow the target user (authenticated)
+
+### Followers / Following lists
+- GET /api/accounts/users/<user_id>/followers/ — list followers of the user
+- GET /api/accounts/users/<user_id>/following/ — list users the user follows
+
+### Feed
+- GET /api/feed/ — returns posts by users you follow, ordered newest first (authenticated)
