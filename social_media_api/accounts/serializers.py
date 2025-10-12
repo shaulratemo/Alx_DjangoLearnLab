@@ -9,7 +9,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     Serializer for registering new users.
     Automatically creates a token for the user after registration.
     """
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField()
 
     class Meta:
         model = User
